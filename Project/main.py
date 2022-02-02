@@ -1,26 +1,33 @@
 import requests 
 import config
 
-# fucntions implemented to allow fro less repeatativeness
-# also added for easier exploration of other parts of the API
 
-
-
-# prints a list from the API based on the url json response and the certain section wanted
 def print_response_list(response,response_keyword):
+    """
+    prints a list from the API based on the url json response and the certain section wanted. 
+    response = API response dictionaryr
+    response_keyword = section of results wanted 
+    """
     for i,_ in enumerate(response['results']):
         print(f'{i+1}. {response1["results"][i][response_keyword]}') 
 
 
-# makes a new list from the API based on the wnated response type 
-def append_function(response,response_keyword):
+
+def new_response_list(response,response_keyword):
+    """
+    makes a new list from the API based on the wanted response type 
+    response = API response dictionaryr
+    response_keyword = section of results wanted 
+    """
     result = []
     for i,__ in enumerate(response['results']['books']):
         result.append(response['results']['books'][i][response_keyword])
     return result
 
-# prints out a formatted list, optional argument of list2
-def print_list(list1,list2=None):
+def print_bulleted_list(list1,list2=None):
+    """
+    prints out a formatted list with numbered bullets. list2 is an optional argument
+    """
     for i,_ in enumerate(list1):
         if list2 == None:
             print(f'{i+1}. {list1[i]}')
@@ -43,13 +50,13 @@ url2 = f'https://api.nytimes.com/svc/books/v3/lists/current/{response1["results"
 response2 = requests.get(url2).json()
 
 
-title_result = append_function(response2,'title')
+title_result = new_response_list(response2,'title')
 
 # print(f'The New York Times {response1["results"]["list_name_encoded"][list_type]} Bestseller List for {response2["last_modified"][:10]}')
-print_list(title_result)
+print_bulleted_list(title_result)
 
-description_result = append_function(response2,'description')
+description_result = new_response_list(response2,'description')
 
-print_list(description_result)
+print_bulleted_list(description_result)
 
-print_list(description_result,title_result)
+print_bulleted_list(description_result,title_result)
